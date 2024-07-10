@@ -6,7 +6,7 @@ public:
             if(logs[i][0]!='.'){
                 ans++;
             }
-            else if( ans>0 && logs[i][0]=='.' && logs[i].size()==3){
+            else if( ans>0 && logs[i]== "../"){
                 ans--;
             }
         }
