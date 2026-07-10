@@ -1,46 +1,54 @@
 class Solution {
 public:
 
-    int firstOccurence(vector<int>& nums, int target){
+    // Finds the first index where nums[index] == target
+    int firstOccurence(vector<int>& nums, int target) {
 
-        int low = 0;
-        int high = nums.size()-1;
+        int start = 0;
+        int end = nums.size() - 1;
 
-        int ans = nums.size();
+        int ans = -1;              // Changed from nums.size()
 
-        while(low <= high){
+        while (start <= end) {
 
-            int mid = low + (high-low)/2;
+            int mid = start + (end - start) / 2;
 
-            if(nums[mid] >= target){
-                ans = mid;
-                high = mid-1;
+            if (nums[mid] == target) {
+                ans = mid;          // Store answer
+                end = mid - 1;      // Continue searching on left
             }
-            else{
-                low = mid+1;
+            else if (nums[mid] > target) {
+                end = mid - 1;
+            }
+            else {
+                start = mid + 1;
             }
         }
 
         return ans;
     }
 
-    int lastOccurence(vector<int>& nums, int target){
+    // Finds the last index where nums[index] == target
+    int lastOccurence(vector<int>& nums, int target) {
 
-        int low = 0;
-        int high = nums.size()-1;
+        int start = 0;
+        int end = nums.size() - 1;
 
-        int ans = nums.size();
+        int ans = -1;              // Changed from nums.size()
 
-        while(low <= high){
+        while (start <= end) {
 
-            int mid = low + (high-low)/2;
+            int mid = start + (end - start) / 2;
 
-            if(nums[mid] > target){
-                ans = mid;
-                high = mid-1;
+            if (nums[mid] == target) {
+                ans = mid;          // Store answer
+                start = mid + 1;    // Continue searching on right
             }
-            else{
-                low = mid+1;
+            else if (nums[mid] > target) {
+                end = mid - 1;
+            }
+            else {
+                start = mid + 1;
             }
         }
 
@@ -48,14 +56,14 @@ public:
     }
 
     vector<int> searchRange(vector<int>& nums, int target) {
-        int start = firstOccurence (nums,target);
 
-        if(start == nums.size() || nums[start] != target)
-            return {-1,-1};
+        int start = firstOccurence(nums, target);
 
-        int end = lastOccurence(nums,target);
+        if (start == -1)           // Target not found
+            return {-1, -1};
 
-        return {start,end-1};
+        int end = lastOccurence(nums, target);
 
+        return {start, end};       
     }
 };
